@@ -20,6 +20,10 @@ services:
 ###< doctrine/doctrine-bundle ###
 
   php:
+    environment:
+      - APP_ENV=dev
+      - APP_SECRET=55fbe5f4ba29af842e3718e52ba614c8
+      - DATABASE_URL="mysql://promobit:symfony@127.0.0.1:4306/promobit?serverVersion=5.7"
     container_name: php
     build:
       context: ./php

@@ -27,6 +27,8 @@ RUN git config --global user.email "neemias.jr@gmail.com" \
 
 RUN git clone https://github.com/neemiasjr/promobit-desafio1.git
 
+RUN apt-get install -y procps vim
+
 WORKDIR /var/www/promobit/promobit-desafio1
 
 CMD composer install; wait-for-it database:3306 -- bin/console doctrine:migrations:migrate; php-fpm 
