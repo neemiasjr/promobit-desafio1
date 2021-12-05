@@ -7,6 +7,14 @@ RUN apt update \
     && docker-php-ext-configure zip \
     && docker-php-ext-install zip
 
+RUN apt-get update -y && apt-get install -y libwebp-dev libjpeg62-turbo-dev libpng-dev libxpm-dev \
+    libfreetype6-dev
+RUN apt-get install -y \
+        zlib1g-dev
+RUN docker-php-ext-install gd 
+RUN docker-php-ext-install mbstring 
+RUN docker-php-ext-install mysqli pdo pdo_mysql
+
 WORKDIR /var/www/promobit
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
