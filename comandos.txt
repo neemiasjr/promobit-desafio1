@@ -1,0 +1,48 @@
+
+#composer require validator twig-bundle security-csrf form
+
+
+#Crindo o projeto Symfony 5.1
+symfony new promobit-desafio1 --version=5.1
+
+
+#Para gerar as entidades no banco de dados automaticamentes
+composer require symfony/orm-pack
+composer require symfony/maker-bundle --dev
+
+
+#para criar uma entidade
+php bin/console make:entity
+
+
+#Para resolver o problema do pacote Class Doctrine\Common\Cache\ArrayCache does not exist
+
+As you can read in an issue posted in the issue tracker of doctrine/cache, that class has been deprecated in v1 of that package, and removed in v2.
+If you still want to use that class, run composer require doctrine/cache "^1.12" to install a version of that package from the v1 branch.
+
+
+#Para gerar o arquivo de migração 
+php bin/console make:migration
+
+#Para rodara a migração para a base de dados.
+php bin/console doctrine:migrations:migrate
+
+
+#Biblioteca gerar dados fake na base de dados
+composer require --dev orm-fixtures
+
+#Biblioteca par agerar dados fake
+composer require fzaninotto/faker
+
+composer req --dev maker ormfixtures fakerphp/faker
+
+#Comando para gerar dados fake na base de dados
+php bin/console doctrine:fixtures:load
+
+
+
+
+
+
+
+

@@ -21,5 +21,4 @@ RUN git clone https://github.com/neemiasjr/promobit-desafio1.git
 
 WORKDIR /var/www/promobit/promobit-desafio1
 
-RUN composer install
-
+CMD composer install; wait-for-it database:3306 -- bin/console doctrine:migrations:migrate; php-fpm 
