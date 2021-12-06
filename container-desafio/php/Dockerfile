@@ -16,28 +16,31 @@ RUN apt install -y --no-install-recommends \
         mysqli \
         pdo pdo_mysql
 
+RUN apt-get update -y && apt-get install -y libwebp-dev libjpeg62-turbo-dev libpng-dev libxpm-dev \
+    libfreetype6-dev
+
 RUN docker-php-ext-install gd 
 RUN docker-php-ext-install mbstring
 
 RUN apt-get install -y procps vim
 
-WORKDIR /var/www/promobit
-
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 RUN curl -sS https://get.symfony.com/cli/installer | bash
+
+WORKDIR /var/www/symfony
 
 #RUN mv /root/.symfony/bin/symfony /usr/local/bin/symfony
 
 RUN git config --global user.email "neemias.jr@gmail.com" \ 
     && git config --global user.name "Neemias Chagas de Souza Junior"
 
-COPY . /var/www/symfony
+RUN git clone --branch "desenv" https://github.com/neemiasjr/promobit-desafio1.git
 
-#RUN git clone --branch "desenv" https://github.com/neemiasjr/promobit-desafio1.git
+RUN chmod a+x ./start.sh
 
+COPY ./start.sh /usr/local/bin/start
 
+RUN chmod u+x /usr/local/bin/start
 
-#WORKDIR /var/www/promobit/promobit-desafio1
-
-CMD ./start.sh
+CMD ["/bin/sh", "-c", "/usr/local/bin/start"]
