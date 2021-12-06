@@ -8,8 +8,8 @@
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
-/container-desafio/mysql
-/container-desafio/php/volume
-/container-desafio/nginx/volume
+/container-desafio/mysql/volume/
+/container-desafio/php/volume/
+/container-desafio/nginx/volume/
 
 
