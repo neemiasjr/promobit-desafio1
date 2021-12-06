@@ -41,6 +41,24 @@ php bin/console doctrine:fixtures:load
 
 
 
+#Docker - removendo cache
+docker-compose build --no-cache
+
+docker-compose down && docker-compose build --no-cache && docker-compose up
+
+#Limpar containers
+docker stop $(docker ps -qa) && docker system prune -af --volumes
+
+
+#Recriar o container
+
+docker build .
+
+docker-compose build
+
+docker-compose up
+
+
 
 
 

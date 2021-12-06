@@ -1,0 +1,45 @@
+version: '3.8'
+services:
+  mysql:
+    image: mysql:5.7.36
+    ports:
+      - 3306:3306
+    volumes:
+      - ./.docker/mysql/config/mysql-docker.cnf:/etc/mysql/conf.d/mysql-docker.cnf:ro
+      - ./.docker/mysql/data/:/var/lib/mysql:rw
+      - ./.docker/mysql/log/:/var/log/mysql:rw
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+  apache:
+    build: ./.docker/apache
+    ports:
+      - 8080:80
+    volumes:
+      - ./public:/var/www/html/public:ro
+      - ./.docker/apache/config/vhosts.conf:/etc/apache2/sites-enabled/vhosts.conf:ro
+    depends_on:
+      - php
+  php:
+    build:
+      context: .
+      dockerfile: ./.docker/php/Dockerfile
+    ports:
+      - 9000:8000
+    environment:
+      APP_ENV: ${APP_ENV}
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_ROOT_PASSWORD: symfony5
+      MYSQL_USER: promobit
+      MYSQL_PASSWORD: symfony
+      #MYSQL_DATABASE: my_database
+      DATABASE_URL: "mysql://promobit:symfony@127.0.0.1:4306/promobit?serverVersion=5.7"
+    volumes:
+      - .:/var/www/html:rw
+      - ./.docker/php/logs:/app/var/logs:rw
+    depends_on:
+      - mysql
